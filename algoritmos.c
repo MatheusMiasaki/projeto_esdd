@@ -2,6 +2,7 @@
 extern long long comparacoes;
 extern long long movimentacoes;
 
+// Seção Bubblesort
 // compara os pares de vizinhos e troca de posição se o da esquerda for maior que o da direita.
 void bubble_sort(int vetor[], int tamanho)
 {
@@ -25,6 +26,7 @@ void bubble_sort(int vetor[], int tamanho)
     }
 }
 
+// Seção Insertionsort
 // percorre a lista pegando o elemento da direita e comparando com os elementos da esquerda, se for menor, muda de posição.
 void insertion_sort(int vetor[], int tamanho)
 {
@@ -52,7 +54,7 @@ void insertion_sort(int vetor[], int tamanho)
     }
 }
 
-
+// Seção Selectionsort
 // Divide a lista em 2 partes a parte ordenada e a não ordenada, pega o menor elemento da desordenada e move para ordenada.
 void selection_sort(int vetor[], int tamanho)
 {
@@ -73,4 +75,97 @@ void selection_sort(int vetor[], int tamanho)
             movimentacoes++;
         }
     }
+}
+
+// Seção Mergesort
+// Função para intercalar (mesclar) duas metades ordenadas
+void intercalar(int vetor[], int esquerda, int meio, int direita) {
+    int i, j, k;
+    int n1 = meio - esquerda + 1;
+    int n2 = direita - meio;
+
+    // Vetores temporários para armazenar as duas metades
+    int V_Esquerda[n1];
+    int V_Direita[n2];
+
+    // Cópia dos dados para os vetores divididos
+    for (i = 0; i < n1; i++)
+        V_Esquerda[i] = vetor[esquerda + i];
+    for (j = 0; j < n2; j++)
+        V_Direita[j] = vetor[meio + 1 + j];
+
+    // Restauração dos índices iniciais dos vetores
+    i = 0; 
+    j = 0; 
+    k = esquerda; 
+
+    // Intercalação dos elementos no vetor original
+    while (i < n1 && j < n2) {
+        if (V_Esquerda[i] <= V_Direita[j]) {
+            vetor[k] = V_Esquerda[i];
+            i++;
+        } else {
+            vetor[k] = V_Direita[j];
+            j++;
+        }
+        k++;
+    }
+
+    // Cópia dos elementos restantes do vetor à esquerda, se houver
+    while (i < n1) {
+        vetor[k] = V_Esquerda[i];
+        i++;
+        k++;
+    }
+
+    // Cópia dos elementos restantes do vetor à direita, se houver
+    while (j < n2) {
+        vetor[k] = V_Direita[j];
+        j++;
+        k++;
+    }
+}
+
+// Função principal do Mergesort
+void mergesort(int vetor[], int esquerda, int direita) {
+    if (esquerda < direita) {
+        int meio = esquerda + (direita - esquerda) / 2;
+
+        mergesort(vetor, esquerda, meio);
+        mergesort(vetor, meio + 1, direita);
+
+        intercalar(vetor, esquerda, meio, direita);
+    }
+}
+
+// Seção Quicksort
+// Função principal do Quicksort
+void QuickSort(int numeros[], int inicio, int fim){
+    if (inicio < fim) {
+        int pivo = particionar(numeros, inicio, fim);
+        QuickSort(numeros, inicio, pivo - 1);
+        QuickSort(numeros, pivo + 1, fim);
+    }
+}
+
+// Função de particionamento usando o PRIMEIRO elemento como pivo
+int particionar(int vetor[], int inicio, int fim) {
+    int pivo = vetor[inicio];
+    int i = fim + 1;
+
+    for (int j = fim; j >= inicio + 1; j--) {
+        if (vetor[j] > pivo) {
+            i--;
+            int temp = vetor[i];
+            vetor[i] = vetor[j];
+            vetor[j] = temp;
+        }
+    }
+    
+    // Troca o pivo para a sua posição correta (i - 1)
+    int temp = vetor[i - 1];
+    vetor[i - 1] = vetor[inicio];
+    vetor[inicio] = temp;
+
+    return (i - 1);
 }
