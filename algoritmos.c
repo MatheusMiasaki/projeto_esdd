@@ -138,7 +138,9 @@ void merge_sort(int vetor[], int esquerda, int direita) {
         merge_sort(vetor, esquerda, meio);
         merge_sort(vetor, meio + 1, direita);
 
-        intercalar(vetor, esquerda, meio, direita);
+        comparacoes++;
+        if (vetor[meio] > vetor[meio+1])
+            intercalar(vetor, esquerda, meio, direita);
     }
 }
 
@@ -152,10 +154,12 @@ int particionar(int vetor[], int inicio, int fim) {
         comparacoes++;
         if (vetor[j] > pivo) {
             i--;
-            int temp = vetor[i];
-            vetor[i] = vetor[j];
-            vetor[j] = temp;
-            movimentacoes++;
+            if (i != j){
+                int temp = vetor[i];
+                vetor[i] = vetor[j];
+                vetor[j] = temp;
+                movimentacoes++;
+            }
         }
     }
     
