@@ -5,6 +5,8 @@
 void bubble_sort(int vetor[], int tamanho);
 void insertion_sort(int vetor[], int tamanho);
 void selection_sort(int vetor[], int tamanho);
+void merge_sort(int vetor[], int esquerda, int direita);
+void quick_sort(int vetor[], int inicio, int fim);
 
 int *criar_vetor(int tamanho, int tipo); 
 int *copiar_vetor(int original[], int tamanho);
@@ -58,7 +60,7 @@ int main()
         printf("Escolha: ");
         scanf("%d", &algoritmo);
 
-        if (algoritmo < 1 || algoritmo > 3)
+        if (algoritmo < 1 || algoritmo > 5)
         {
             printf("Algoritmo invalido.\n");
             free(vetor_original);
@@ -93,6 +95,12 @@ int main()
                 break;
             case 3:
                 selection_sort(vetor, tamanho);
+                break;
+            case 4:
+                merge_sort(vetor, 0, tamanho-1);
+                break;
+            case 5:
+                quick_sort(vetor, 0, tamanho-1);
                 break;
         }
 
