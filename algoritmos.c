@@ -101,11 +101,14 @@ void intercalar(int vetor[], int esquerda, int meio, int direita) {
 
     // Intercalação dos elementos no vetor original
     while (i < n1 && j < n2) {
+        comparacoes++;
         if (V_Esquerda[i] <= V_Direita[j]) {
             vetor[k] = V_Esquerda[i];
+            movimentacoes++;
             i++;
         } else {
             vetor[k] = V_Direita[j];
+            movimentacoes++;
             j++;
         }
         k++;
@@ -127,38 +130,36 @@ void intercalar(int vetor[], int esquerda, int meio, int direita) {
 }
 
 // Função principal do Mergesort
-void mergesort(int vetor[], int esquerda, int direita) {
+void merge_sort(int vetor[], int esquerda, int direita) {
+    comparacoes++;
     if (esquerda < direita) {
         int meio = esquerda + (direita - esquerda) / 2;
 
-        mergesort(vetor, esquerda, meio);
-        mergesort(vetor, meio + 1, direita);
+        merge_sort(vetor, esquerda, meio);
+        merge_sort(vetor, meio + 1, direita);
 
-        intercalar(vetor, esquerda, meio, direita);
+        comparacoes++;
+        if (vetor[meio] > vetor[meio+1])
+            intercalar(vetor, esquerda, meio, direita);
     }
 }
 
 // Seção Quicksort
-// Função principal do Quicksort
-void QuickSort(int numeros[], int inicio, int fim){
-    if (inicio < fim) {
-        int pivo = particionar(numeros, inicio, fim);
-        QuickSort(numeros, inicio, pivo - 1);
-        QuickSort(numeros, pivo + 1, fim);
-    }
-}
-
 // Função de particionamento usando o PRIMEIRO elemento como pivo
 int particionar(int vetor[], int inicio, int fim) {
     int pivo = vetor[inicio];
     int i = fim + 1;
 
     for (int j = fim; j >= inicio + 1; j--) {
+        comparacoes++;
         if (vetor[j] > pivo) {
             i--;
-            int temp = vetor[i];
-            vetor[i] = vetor[j];
-            vetor[j] = temp;
+            if (i != j){
+                int temp = vetor[i];
+                vetor[i] = vetor[j];
+                vetor[j] = temp;
+                movimentacoes++;
+            }
         }
     }
     
@@ -169,3 +170,14 @@ int particionar(int vetor[], int inicio, int fim) {
 
     return (i - 1);
 }
+
+// Função principal do Quicksort
+void quick_sort(int vetor[], int inicio, int fim){
+    comparacoes++;
+    if (inicio < fim) {
+        int pivo = particionar(vetor, inicio, fim);
+        quick_sort(vetor, inicio, pivo - 1);
+        quick_sort(vetor, pivo + 1, fim);
+    }
+}
+
