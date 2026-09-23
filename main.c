@@ -57,6 +57,8 @@ int main()
         printf("1 - Bubble sort\n");
         printf("2 - Insertion sort\n");
         printf("3 - Selection sort\n");
+        printf("4 - Merge sort\n");
+        printf("5 - Quick sort\n");
         printf("Escolha: ");
         scanf("%d", &algoritmo);
 

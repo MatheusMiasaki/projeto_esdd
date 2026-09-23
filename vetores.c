@@ -22,9 +22,6 @@ int *criar_vetor(int tamanho, int tipo)
             vetor[i] = tamanho - i;
     }
 
-    free(vetor);
-    vetor = NULL;
-
     return vetor;
 }
 
@@ -38,9 +35,6 @@ int *copiar_vetor(int original[], int tamanho)
 
     for (int i = 0; i < tamanho; i++)
         copia[i] = original[i];
-
-    free(copia);
-    copia = NULL;
 
     return copia;
 }
