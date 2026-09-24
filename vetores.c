@@ -14,7 +14,16 @@ int *criar_vetor(int tamanho, int tipo)
 
     for (int i = 0; i < tamanho; i++)
     {
-        if (tipo == 1)
+         if (tipo == 4)
+        {
+            printf("Digite o valor da posicao %d: ", i + 1);
+            if (scanf("%d", &vetor[i]) != 1)
+            {
+                free(vetor);
+                return NULL;
+            }
+        }
+        else if (tipo == 1)
             vetor[i] = rand() % 100; 
         else if (tipo == 2)
             vetor[i] = i + 1;

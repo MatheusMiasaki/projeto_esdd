@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// após digitar o tamanho do vetor, o sistema deve perguntar se o vetor devará ser gerado de forma automatica ou inserido pelo usuario, caso seja inseido pelo usuario deverá pode ser colocado o tamanho do vertyo
+
 // Funcoes dos outros arquivos
 void bubble_sort(int vetor[], int tamanho);
 void insertion_sort(int vetor[], int tamanho);
 void selection_sort(int vetor[], int tamanho);
 void merge_sort(int vetor[], int esquerda, int direita);
 void quick_sort(int vetor[], int inicio, int fim);
-
 int *criar_vetor(int tamanho, int tipo); 
 int *copiar_vetor(int original[], int tamanho);
-void mostrar_vetor(int vetor[], int tamanho);
 
+void mostrar_vetor(int vetor[], int tamanho);
 void iniciar_medicao();
 void finalizar_medicao();
 void mostrar_metricas(int tamanho);
@@ -20,6 +21,7 @@ int main()
 {
     int tamanho, tipo, algoritmo, repetir;
 
+novo_vetor:
     printf("===> Teste de ordenacao <===\n");
     printf("Digite o tamanho do vetor: ");
     scanf("%d", &tamanho);
@@ -30,14 +32,31 @@ int main()
         return 1;
     }
 
-    printf("\nComo voce quer o vetor?\n");
-    printf("1 - Aleatorio\n");
-    printf("2 - Ordenado\n");
-    printf("3 - Invertido\n");
+    printf("\nComo voce quer preencher o vetor?\n");
+    printf("1 - Gerar automaticamente\n");
+    printf("2 - Inserir os valores manualmente\n");
     printf("Escolha: ");
     scanf("%d", &tipo);
 
-    if (tipo < 1 || tipo > 3)
+    if (tipo == 1)
+    {
+        printf("\nQual tipo de vetor automatico?\n");
+        printf("1 - Aleatorio\n");
+        printf("2 - Ordenado\n");
+        printf("3 - Invertido\n");
+        printf("Escolha: ");
+        scanf("%d", &tipo);
+        if (tipo < 1 || tipo > 3)
+        {
+            printf("Opcao invalida.\n");
+            return 1;
+        }
+    }
+    else if (tipo == 2)
+    {
+        tipo = 4; // Os valores serao lidos do usuario em criar_vetor.
+    }
+    else
     {
         printf("Opcao invalida.\n");
         return 1;
@@ -51,7 +70,7 @@ int main()
         return 1;
     }
 
-    do
+    while (1)
     {
         printf("\nEscolha o algoritmo:\n");
         printf("1 - Bubble sort\n");
@@ -117,14 +136,26 @@ int main()
         mostrar_metricas(tamanho);
         free(vetor);
 
-        printf("\nDeseja testar outro metodo com o mesmo vetor?\n");
-        printf("1 - Sim\n");
-        printf("0 - Nao\n");
+        printf("\nO que deseja fazer agora?\n");
+        printf("1 - Testar outro metodo com o mesmo vetor\n");
+        printf("2 - Inserir um vetor novo\n");
+        printf("0 - Encerrar o programa\n");
         printf("Escolha: ");
         scanf("%d", &repetir);
-    } while (repetir == 1);
 
-    free(vetor_original);
+        if (repetir == 1)
+            continue;
+
+        free(vetor_original);
+        if (repetir == 2)
+            goto novo_vetor;
+        if (repetir == 0)
+            break;
+
+        printf("Opcao invalida.\n");
+        return 1;
+    }
+
     printf("\nPrograma encerrado.\n");
     return 0;
 }
