@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 // Contadores definidos em metrica.c
 extern long long comparacoes;
 extern long long movimentacoes;
@@ -16,6 +18,7 @@ void bubble_sort(int vetor[], int tamanho)
             comparacoes++;
             if (vetor[j] > vetor[j + 1])
             {
+                printf("Trocou %d (pos %d) com %d (pos %d)\n", vetor[j], j, vetor[j+1], j+1);
                 int auxiliar = vetor[j];
                 vetor[j] = vetor[j + 1];
                 vetor[j + 1] = auxiliar;
@@ -44,13 +47,17 @@ void insertion_sort(int vetor[], int tamanho)
                 continuar = 0;
             else
             {
+                printf("Trocou %d (pos %d) com %d (pos %d)\n", vetor[j+1], j+1, vetor[j], j);
                 vetor[j + 1] = vetor[j];
                 movimentacoes++;
                 j--;
             }
         }
-        vetor[j + 1] = valor; 
-        movimentacoes++;
+        if ((j+1) != i){
+            printf("Trocou %d (pos %d) com %d (pos %d)\n", vetor[j+1], j+1, valor, i);
+            vetor[j + 1] = valor; 
+            movimentacoes++;
+        }
     }
 }
 
@@ -69,6 +76,7 @@ void selection_sort(int vetor[], int tamanho)
         }
         if (posicao_menor != i) 
         {
+            printf("Trocou %d (pos %d) com %d (pos %d)\n", vetor[i], i, vetor[posicao_menor], posicao_menor);
             int auxiliar = vetor[i];
             vetor[i] = vetor[posicao_menor];
             vetor[posicao_menor] = auxiliar;
@@ -85,14 +93,14 @@ void intercalar(int vetor[], int esquerda, int meio, int direita) {
     int n2 = direita - meio;
 
     // Vetores temporários para armazenar as duas metades
-    int V_Esquerda[n1];
-    int V_Direita[n2];
+    int vetor_esquerda[n1];
+    int vetor_direita[n2];
 
     // Cópia dos dados para os vetores divididos
     for (i = 0; i < n1; i++)
-        V_Esquerda[i] = vetor[esquerda + i];
+        vetor_esquerda[i] = vetor[esquerda + i];
     for (j = 0; j < n2; j++)
-        V_Direita[j] = vetor[meio + 1 + j];
+        vetor_direita[j] = vetor[meio + 1 + j];
 
     // Restauração dos índices iniciais dos vetores
     i = 0; 
@@ -102,12 +110,14 @@ void intercalar(int vetor[], int esquerda, int meio, int direita) {
     // Intercalação dos elementos no vetor original
     while (i < n1 && j < n2) {
         comparacoes++;
-        if (V_Esquerda[i] <= V_Direita[j]) {
-            vetor[k] = V_Esquerda[i];
+        if (vetor_esquerda[i] <= vetor_direita[j]) {
+            printf("Trocou %d (pos %d) com %d (pos %d)\n", vetor[k], k, vetor_esquerda[i], i);
+            vetor[k] = vetor_esquerda[i];
             movimentacoes++;
             i++;
         } else {
-            vetor[k] = V_Direita[j];
+            printf("Trocou %d (pos %d) com %d (pos %d)\n", vetor[k], k, vetor_direita[j], j);
+            vetor[k] = vetor_direita[j];
             movimentacoes++;
             j++;
         }
@@ -116,14 +126,14 @@ void intercalar(int vetor[], int esquerda, int meio, int direita) {
 
     // Cópia dos elementos restantes do vetor à esquerda, se houver
     while (i < n1) {
-        vetor[k] = V_Esquerda[i];
+        vetor[k] = vetor_esquerda[i];
         i++;
         k++;
     }
 
     // Cópia dos elementos restantes do vetor à direita, se houver
     while (j < n2) {
-        vetor[k] = V_Direita[j];
+        vetor[k] = vetor_direita[j];
         j++;
         k++;
     }
@@ -155,6 +165,7 @@ int particionar(int vetor[], int inicio, int fim) {
         if (vetor[j] > pivo) {
             i--;
             if (i != j){
+                printf("Trocou %d (pos %d) com %d (pos %d)\n", vetor[i], i, vetor[j], j);
                 int temp = vetor[i];
                 vetor[i] = vetor[j];
                 vetor[j] = temp;
